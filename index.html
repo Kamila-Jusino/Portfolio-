@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamila Jusino Meléndez | Data Analytics & Computer Science</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #22d3ee;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        #hero {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 100%);
+        }
+
+        .hero-content {
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content h2 {
+            font-size: 2rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        h2.section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .skill-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 0.5rem;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .contact-link:hover {
+            color: var(--primary);
+        }
+
+        footer {
+            background: var(--bg-dark);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .experience-timeline {
+            margin-top: 2rem;
+        }
+
+        .timeline-item {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .timeline-item h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item .date {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-item ul {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .timeline-item li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Kamila Jusino-Meléndez</h1>
+                <h2>Data Analytics & Computer Science</h2>
+                <p>Data-driven Computer Science student with a passion for transforming complex datasets into meaningful insights. Currently seeking Business Analytics internships in Birmingham, AL.</p>
+                <a href="#projects" class="cta-button">View My Work →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Hello! I'm Kamila, a Senior Computer Science student at UAB with a minor in Management. I'm passionate about leveraging data analysis and technology to solve real-world business problems.</p>
+                    <p>My experience spans from analyzing social network data related to community gun violence to building full-stack web applications with cloud infrastructure. I thrive in collaborative environments and enjoy the challenge of turning complex data into actionable insights.</p>
+                    <p>When I'm not coding or analyzing data, you can find me performing with UAB Bands or engaging with my communities in Tau Beta Sigma and Women in Tech.</p>
+                    <p><strong>Languages:</strong> Fluent in English and Spanish</p>
+                </div>
+                <div class="about-text">
+                    <h3 style="color: var(--primary); margin-bottom: 1rem;">Education</h3>
+                    <p><strong>University of Alabama at Birmingham (UAB)</strong></p>
+                    <p>B.A. in Computer Science, Minor in Management</p>
+                    <p>August 2022 – April 2026</p>
+                    <p style="margin-top: 1rem;"><strong>Honors:</strong> Dean's List (Fall 2022, Fall 2024, Spring 2025)</p>
+                    <p style="margin-top: 1rem;"><strong>Location:</strong> Helena, AL</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="skill-icon">
+                    <div>Python</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="skill-icon">
+                    <div>Java</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tableau/tableau-original.svg" alt="Tableau" class="skill-icon">
+                    <div>Tableau</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL" class="skill-icon">
+                    <div>SQL</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas" class="skill-icon">
+                    <div>Pandas</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-icon">
+                    <div>JavaScript</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="skill-icon">
+                    <div>AWS</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="UI/UX" class="skill-icon">
+                    <div>UI/UX</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/networkx/networkx-original.svg" alt="NetworkX" class="skill-icon">
+                    <div>NetworkX</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-original.svg" alt="Excel" class="skill-icon">
+                    <div>Excel</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" class="skill-icon">
+                    <div>Git</div>
+                </div>
+                <div class="skill-item">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask" class="skill-icon">
+                    <div>Flask</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects & Experience</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Social Network Analysis</h3>
+                        <p>Led analysis of real-world community data related to gun violence in collaboration with a UAB Senior Data Fellow. Developed production-ready Python scripts for network analysis.</p>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                            <li>Analyzed complex relationship data using NetworkX</li>
+                            <li>Calculated degree and betweenness centrality metrics</li>
+                            <li>Optimized code for HPC cluster execution</li>
+                        </ul>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">NetworkX</span>
+                            <span class="tag">HPC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>File-Sharing Web Application</h3>
+                        <p>Built a full-stack application for secure file sharing with automated email distribution of download links.</p>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                            <li>Integrated AWS S3, DynamoDB, Lambda, and SES</li>
+                            <li>Deployed on EC2 for scalability</li>
+                            <li>Designed intuitive Flask backend</li>
+                        </ul>
+                        <div class="project-tags">
+                            <span class="tag">Flask</span>
+                            <span class="tag">AWS</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Converter Web Application</h3>
+                        <p>Led a 4-person team developing a responsive web app for real-time data conversions with live currency API integration.</p>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                            <li>Managed team collaboration via GitHub</li>
+                            <li>Integrated live currency conversion API</li>
+                            <li>Coordinated pull requests and code reviews</li>
+                        </ul>
+                        <div class="project-tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Farm Management Dashboard</h3>
+                        <p>Built an interactive JavaFX desktop application for tracking farm assets including livestock, equipment, and supplies.</p>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                            <li>Implemented OOP design patterns</li>
+                            <li>Collaborated in Agile workflow</li>
+                            <li>Managed version control with Git</li>
+                        </ul>
+                        <div class="project-tags">
+                            <span class="tag">Java</span>
+                            <span class="tag">JavaFX</span>
+                            <span class="tag">OOP</span>
+                            <span class="tag">Git</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Network Administration Lab</h3>
+                        <p>Simulated and troubleshot network systems while building TCP client-server applications for file transfer.</p>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1rem;">
+                            <li>Used Cisco Packet Tracer and Wireshark</li>
+                            <li>Built Python TCP applications</li>
+                            <li>Analyzed network connectivity issues</li>
+                        </ul>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Networking</span>
+                            <span class="tag">Wireshark</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="experience-timeline" style="margin-top: 4rem;">
+                <h3 style="color: var(--primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">Work Experience</h3>
+                <div class="timeline-item">
+                    <h3>Starbucks Barista</h3>
+                    <div class="date">July 2024 – Present | Helena, AL</div>
+                    <ul>
+                        <li>Excel in fast-paced, customer-focused environment requiring accuracy and adaptability</li>
+                        <li>Strengthen communication skills through diverse customer interactions</li>
+                        <li>Demonstrate time management balancing work and academic responsibilities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="section-title">Let's Connect</h2>
+                <p style="color: var(--text-secondary); font-size: 1.2rem; margin-bottom: 2rem;">
+                    I'm currently seeking Business Analytics internship opportunities in Birmingham, AL. 
+                    Feel free to reach out if you'd like to discuss data analytics, technology, or potential opportunities!
+                </p>
+                <div class="contact-links">
+                    <a href="mailto:kamila.jusino@gmail.com" class="contact-link">
+                        <span>Email</span>
+                    </a>
+                    <a href="https://linkedin.com/in/kamilajusino" target="_blank" class="contact-link">
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/kamilajusino" target="_blank" class="contact-link">
+                        <span>GitHub</span>
+                    </a>
+                    <a href="tel:2058630126" class="contact-link">
+                        <span>(205) 863-0126</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Kamila Jusino-Meléndez. Built with passion for data and technology.</p>
+    </footer>
+</body>
+</html>
