@@ -30,6 +30,126 @@
             background: var(--bg-dark);
             color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            overflow: hidden;
+        }
+
+        .ambient-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .ambient-bg::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 60%);
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-30%, -60%) rotate(180deg); }
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 50%;
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Interactive Character */
+        .character {
+            position: fixed;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .character:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 50px rgba(99, 102, 241, 0.6);
+        }
+
+        .character.talking {
+            animation: bounce 0.5s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .speech-bubble {
+            position: fixed;
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            max-width: 250px;
+            z-index: 1001;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .speech-bubble.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--primary);
         }
 
         nav {
@@ -38,7 +158,7 @@
             width: 100%;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
-            z-index: 1000;
+            z-index: 999;
             padding: 1rem 2rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -67,6 +187,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
         .container {
@@ -76,7 +197,7 @@
         }
 
         #hero {
-            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 100%);
+            background: transparent;
         }
 
         .hero-content {
@@ -232,6 +353,7 @@
             justify-content: center;
             gap: 2rem;
             margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
         .contact-link {
@@ -276,6 +398,12 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
+
+            .character {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
         }
 
         .experience-timeline {
@@ -312,6 +440,12 @@
     </style>
 </head>
 <body>
+    <div class="ambient-bg"></div>
+
+    <!-- Interactive Character -->
+    <div class="character" id="character">🤖</div>
+    <div class="speech-bubble" id="speechBubble"></div>
+
     <nav>
         <ul>
             <li><a href="#hero">Home</a></li>
@@ -325,9 +459,9 @@
     <section id="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Kamila Jusino-Meléndez</h1>
+                <h1>Kamila Jusino Meléndez</h1>
                 <h2>Data Analytics & Computer Science</h2>
-                <p>Data-driven Computer Science student with a passion for transforming complex datasets into meaningful insights. Currently seeking Business Analytics internships in Birmingham, AL.</p>
+                <p>Data-driven Computer Science student with a passion for transforming complex datasets into meaningful insights. Currently seeking internships in Birmingham, AL.</p>
                 <a href="#projects" class="cta-button">View My Work →</a>
             </div>
         </div>
@@ -360,51 +494,51 @@
             <h2 class="section-title">Technical Skills</h2>
             <div class="skills-grid">
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" class="skill-icon">
                     <div>Python</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/oracle/F80000" alt="Java" class="skill-icon">
                     <div>Java</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tableau/tableau-original.svg" alt="Tableau" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/tableau/E97627" alt="Tableau" class="skill-icon">
                     <div>Tableau</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/mysql/4479A1" alt="SQL" class="skill-icon">
                     <div>SQL</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/pandas/150458" alt="Pandas" class="skill-icon">
                     <div>Pandas</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" class="skill-icon">
                     <div>JavaScript</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/amazonaws/232F3E" alt="AWS" class="skill-icon">
                     <div>AWS</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="UI/UX" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/figma/F24E1E" alt="UI/UX" class="skill-icon">
                     <div>UI/UX</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/networkx/networkx-original.svg" alt="NetworkX" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/scipy/8CAAE6" alt="NetworkX" class="skill-icon">
                     <div>NetworkX</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-original.svg" alt="Excel" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/microsoftexcel/217346" alt="Excel" class="skill-icon">
                     <div>Excel</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/git/F05032" alt="Git" class="skill-icon">
                     <div>Git</div>
                 </div>
                 <div class="skill-item">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask" class="skill-icon">
+                    <img src="https://cdn.simpleicons.org/flask/000000" alt="Flask" class="skill-icon">
                     <div>Flask</div>
                 </div>
             </div>
@@ -525,7 +659,7 @@
             <div class="contact-content">
                 <h2 class="section-title">Let's Connect</h2>
                 <p style="color: var(--text-secondary); font-size: 1.2rem; margin-bottom: 2rem;">
-                    I'm currently seeking Business Analytics internship opportunities in Birmingham, AL. 
+                    I'm currently seeking internships opportunities in Birmingham, AL. 
                     Feel free to reach out if you'd like to discuss data analytics, technology, or potential opportunities!
                 </p>
                 <div class="contact-links">
@@ -547,7 +681,158 @@
     </section>
 
     <footer>
-        <p>© 2026 Kamila Jusino-Meléndez. Built with passion for data and technology.</p>
+        <p>© 2026 Kamila Jusino Meléndez</p>
     </footer>
+
+    <script>
+        // Ambient Background Particles
+        function createParticles() {
+            const bg = document.querySelector('.ambient-bg');
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                bg.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Interactive Character
+        const character = document.getElementById('character');
+        const speechBubble = document.getElementById('speechBubble');
+        
+        const messages = [
+            "Hi! I'm Data Bot! 👋",
+            "Want to learn about Kamila's projects?",
+            "She's amazing at data analysis!",
+            "Check out her Social Network Analysis project!",
+            "She's fluent in Python and JavaScript!",
+            "Looking for a talented data analyst?",
+            "Kamila is seeking internships!",
+            "Click on her contact links below!"
+        ];
+        
+        let messageIndex = 0;
+        let isDragging = false;
+        let currentX, currentY, initialX, initialY;
+        let xOffset = window.innerWidth - 150;
+        let yOffset = window.innerHeight - 150;
+
+        character.style.left = xOffset + 'px';
+        character.style.top = yOffset + 'px';
+
+        function showMessage(message) {
+            speechBubble.textContent = message;
+            const charRect = character.getBoundingClientRect();
+            speechBubble.style.left = charRect.left + 'px';
+            speechBubble.style.top = (charRect.top - 80) + 'px';
+            speechBubble.classList.add('show');
+            character.classList.add('talking');
+            
+            setTimeout(() => {
+                speechBubble.classList.remove('show');
+                character.classList.remove('talking');
+            }, 3000);
+        }
+
+        character.addEventListener('click', () => {
+            showMessage(messages[messageIndex]);
+            messageIndex = (messageIndex + 1) % messages.length;
+        });
+
+        // Auto message on load
+        setTimeout(() => {
+            showMessage(messages[0]);
+        }, 1000);
+
+        // Random messages
+        setInterval(() => {
+            if (!speechBubble.classList.contains('show')) {
+                messageIndex = Math.floor(Math.random() * messages.length);
+                showMessage(messages[messageIndex]);
+            }
+        }, 15000);
+
+        // Dragging functionality
+        character.addEventListener('mousedown', dragStart);
+        character.addEventListener('touchstart', dragStart);
+
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('touchmove', drag);
+
+        document.addEventListener('mouseup', dragEnd);
+        document.addEventListener('touchend', dragEnd);
+
+        function dragStart(e) {
+            if (e.type === 'touchstart') {
+                initialX = e.touches[0].clientX - xOffset;
+                initialY = e.touches[0].clientY - yOffset;
+            } else {
+                initialX = e.clientX - xOffset;
+                initialY = e.clientY - yOffset;
+            }
+
+            if (e.target === character) {
+                isDragging = true;
+            }
+        }
+
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+
+                xOffset = currentX;
+                yOffset = currentY;
+
+                setTranslate(currentX, currentY, character);
+            }
+        }
+
+        function dragEnd() {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+        }
+
+        function setTranslate(xPos, yPos, el) {
+            el.style.left = xPos + 'px';
+            el.style.top = yPos + 'px';
+        }
+
+        // Move character around sections randomly
+        function moveCharacter() {
+            if (!isDragging) {
+                const sections = ['hero', 'about', 'skills', 'projects', 'contact'];
+                const randomSection = sections[Math.floor(Math.random() * sections.length)];
+                const section = document.getElementById(randomSection);
+                const rect = section.getBoundingClientRect();
+                
+                xOffset = Math.random() * (window.innerWidth - 150);
+                yOffset = rect.top + window.scrollY + Math.random() * (rect.height - 150);
+                
+                character.style.transition = 'all 2s ease';
+                character.style.left = xOffset + 'px';
+                character.style.top = yOffset + 'px';
+                
+                setTimeout(() => {
+                    character.style.transition = 'all 0.3s ease';
+                }, 2000);
+            }
+        }
+
+        setInterval(moveCharacter, 20000);
+    </script>
 </body>
 </html>
