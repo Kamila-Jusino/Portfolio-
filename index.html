@@ -4,453 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kamila Jusino Meléndez | Data Analytics & Computer Science</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --accent: #22d3ee;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .ambient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            overflow: hidden;
-        }
-
-        .ambient-bg::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-
-        .ambient-bg::after {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 60%);
-            animation: float 15s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
-            50% { transform: translate(-30%, -60%) rotate(180deg); }
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(99, 102, 241, 0.3);
-            border-radius: 50%;
-            animation: rise linear infinite;
-        }
-
-        @keyframes rise {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        /* Interactive Character */
-        .character {
-            position: fixed;
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        .character:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 50px rgba(99, 102, 241, 0.6);
-        }
-
-        .character.talking {
-            animation: bounce 0.5s ease infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .speech-bubble {
-            position: fixed;
-            background: var(--bg-card);
-            border: 2px solid var(--primary);
-            border-radius: 15px;
-            padding: 1rem 1.5rem;
-            max-width: 250px;
-            z-index: 1001;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .speech-bubble.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 10px solid var(--primary);
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 999;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-
-        nav a:hover {
-            color: var(--primary);
-        }
-
-        section {
-            min-height: 100vh;
-            padding: 6rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        #hero {
-            background: transparent;
-        }
-
-        .hero-content {
-            text-align: center;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-content h2 {
-            font-size: 2rem;
-            color: var(--text-secondary);
-            font-weight: 400;
-            margin-bottom: 2rem;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s;
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-
-        .cta-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        h2.section-title {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-text p {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .skill-item {
-            background: var(--bg-card);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            transition: transform 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .skill-item:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
-
-        .skill-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 0.5rem;
-            object-fit: contain;
-            filter: brightness(0) invert(1);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-        }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-content h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .project-content p {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .tag {
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--accent);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-        }
-
-        .contact-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 1.1rem;
-        }
-
-        .contact-link:hover {
-            color: var(--primary);
-        }
-
-        footer {
-            background: var(--bg-dark);
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-secondary);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-content h2 {
-                font-size: 1.5rem;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .character {
-                width: 80px;
-                height: 80px;
-                font-size: 2rem;
-            }
-        }
-
-        .experience-timeline {
-            margin-top: 2rem;
-        }
-
-        .timeline-item {
-            background: var(--bg-card);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--primary);
-        }
-
-        .timeline-item h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-item .date {
-            color: var(--accent);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .timeline-item ul {
-            margin-left: 1.5rem;
-            color: var(--text-secondary);
-        }
-
-        .timeline-item li {
-            margin-bottom: 0.5rem;
-        }
-    </style>
+    <link rel="icon" type="image/svg+xml" href="rubber_duck_favicon.svg">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="ambient-bg"></div>
-
-    <!-- Interactive Character -->
-    <div class="character" id="character">🤖</div>
-    <div class="speech-bubble" id="speechBubble"></div>
 
     <nav>
         <ul>
             <li><a href="#hero">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -459,95 +22,44 @@
     <section id="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Kamila Jusino Meléndez</h1>
-                <h2>Data Analytics & Computer Science</h2>
-                <p>Data-driven Computer Science student with a passion for transforming complex datasets into meaningful insights. Currently seeking internships in Birmingham, AL.</p>
-                <a href="#projects" class="cta-button">View My Work →</a>
+                <p class="hero-greeting">Hello, I'm</p>
+                <h1 class="hero-title">Kamila Jusino Meléndez.</h1>
+                <h2 class="hero-subtitle">I'm a Data Analytics & Computer Science student.</h2>
+                <a href="#projects" class="cta-button hero-button">View my work <span class="arrow">→</span></a>
             </div>
         </div>
     </section>
 
     <section id="about">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p>Hello! I'm Kamila, a Senior Computer Science student at UAB with a minor in Management. I'm passionate about leveraging data analysis and technology to solve real-world business problems.</p>
-                    <p>My experience spans from analyzing social network data related to community gun violence to building full-stack web applications with cloud infrastructure. I thrive in collaborative environments and enjoy the challenge of turning complex data into actionable insights.</p>
-                    <p>When I'm not coding or analyzing data, you can find me performing with UAB Bands or engaging with my communities in Tau Beta Sigma and Women in Tech.</p>
-                    <p><strong>Languages:</strong> Fluent in English and Spanish</p>
-                </div>
-                <div class="about-text">
-                    <h3 style="color: var(--primary); margin-bottom: 1rem;">Education</h3>
-                    <p><strong>University of Alabama at Birmingham (UAB)</strong></p>
-                    <p>B.A. in Computer Science, Minor in Management</p>
-                    <p>August 2022 – April 2026</p>
-                    <p style="margin-top: 1rem;"><strong>Honors:</strong> Dean's List (Fall 2022, Fall 2024, Spring 2025)</p>
-                    <p style="margin-top: 1rem;"><strong>Location:</strong> Helena, AL</p>
-                </div>
+            <h2 class="section-title">About</h2>
+            <div class="about-content">
+                <p>Fully committed to the philosophy of life-long learning, I'm a Senior Computer Science student at UAB with a minor in Management. I'm passionate about leveraging data analysis and technology to solve real-world business problems. The unique combination of creativity, logic, technology and never running out of new things to discover, drives my excitement and passion for data analytics and web development.</p>
+                <p>My experience spans from analyzing social network data related to community gun violence to building full-stack web applications with cloud infrastructure. I thrive in collaborative environments and enjoy the challenge of turning complex data into actionable insights.</p>
+                <p>When I'm not coding or analyzing data, you can find me performing with UAB Bands or engaging with my communities in Tau Beta Sigma and Women in Tech.</p>
+                <p><strong>Education:</strong> University of Alabama at Birmingham (UAB) | B.A. in Computer Science, Minor in Management | August 2022 – April 2026</p>
+                <p><strong>Languages:</strong> Fluent in English and Spanish</p>
             </div>
-        </div>
-    </section>
-
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" class="skill-icon">
-                    <div>Python</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/oracle/F80000" alt="Java" class="skill-icon">
-                    <div>Java</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/tableau/E97627" alt="Tableau" class="skill-icon">
-                    <div>Tableau</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/mysql/4479A1" alt="SQL" class="skill-icon">
-                    <div>SQL</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/pandas/150458" alt="Pandas" class="skill-icon">
-                    <div>Pandas</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" class="skill-icon">
-                    <div>JavaScript</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/amazonaws/232F3E" alt="AWS" class="skill-icon">
-                    <div>AWS</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/figma/F24E1E" alt="UI/UX" class="skill-icon">
-                    <div>UI/UX</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/scipy/8CAAE6" alt="NetworkX" class="skill-icon">
-                    <div>NetworkX</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/microsoftexcel/217346" alt="Excel" class="skill-icon">
-                    <div>Excel</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/git/F05032" alt="Git" class="skill-icon">
-                    <div>Git</div>
-                </div>
-                <div class="skill-item">
-                    <img src="https://cdn.simpleicons.org/flask/000000" alt="Flask" class="skill-icon">
-                    <div>Flask</div>
-                </div>
+            <div class="skills-list">
+                <span class="skill-tag">PYTHON</span>
+                <span class="skill-tag">JAVA</span>
+                <span class="skill-tag">TABLEAU</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">PANDAS</span>
+                <span class="skill-tag">JAVASCRIPT</span>
+                <span class="skill-tag">AWS</span>
+                <span class="skill-tag">FIGMA</span>
+                <span class="skill-tag">NETWORKX</span>
+                <span class="skill-tag">EXCEL</span>
+                <span class="skill-tag">GIT</span>
+                <span class="skill-tag">FLASK</span>
             </div>
         </div>
     </section>
 
     <section id="projects">
         <div class="container">
-            <h2 class="section-title">Projects & Experience</h2>
+            <h2 class="section-title">Projects</h2>
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-content">
@@ -656,183 +168,32 @@
 
     <section id="contact">
         <div class="container">
-            <div class="contact-content">
-                <h2 class="section-title">Let's Connect</h2>
-                <p style="color: var(--text-secondary); font-size: 1.2rem; margin-bottom: 2rem;">
-                    I'm currently seeking internships opportunities in Birmingham, AL. 
-                    Feel free to reach out if you'd like to discuss data analytics, technology, or potential opportunities!
-                </p>
-                <div class="contact-links">
-                    <a href="mailto:kamila.jusino@gmail.com" class="contact-link">
-                        <span>Email</span>
-                    </a>
-                    <a href="https://linkedin.com/in/kamilajusino" target="_blank" class="contact-link">
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://github.com/kamilajusino" target="_blank" class="contact-link">
-                        <span>GitHub</span>
-                    </a>
-                    <a href="tel:2058630126" class="contact-link">
-                        <span>(205) 863-0126</span>
-                    </a>
+            <h2 class="section-title">Contact</h2>
+            <p class="contact-intro">Have a question or want to work together? Leave your details and I'll get back to you as soon as possible.</p>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Please enter your name." required>
                 </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Please enter a valid email." required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" rows="5" placeholder="Please enter a message." required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+            <div class="contact-links">
+                <a href="mailto:kamila.jusino@gmail.com" class="contact-link">Email</a>
+                <a href="https://linkedin.com/in/kamilajusino" target="_blank" class="contact-link">LinkedIn</a>
+                <a href="https://github.com/kamilajusino" target="_blank" class="contact-link">GitHub</a>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>© 2026 Kamila Jusino Meléndez</p>
+        <p>KAMILA JUSINO MELÉNDEZ © 2026</p>
     </footer>
 
-    <script>
-        // Ambient Background Particles
-        function createParticles() {
-            const bg = document.querySelector('.ambient-bg');
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = Math.random() * 4 + 2 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                bg.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // Interactive Character
-        const character = document.getElementById('character');
-        const speechBubble = document.getElementById('speechBubble');
-        
-        const messages = [
-            "Hi! I'm Data Bot! 👋",
-            "Want to learn about Kamila's projects?",
-            "She's amazing at data analysis!",
-            "Check out her Social Network Analysis project!",
-            "She's fluent in Python and JavaScript!",
-            "Looking for a talented data analyst?",
-            "Kamila is seeking internships!",
-            "Click on her contact links below!"
-        ];
-        
-        let messageIndex = 0;
-        let isDragging = false;
-        let currentX, currentY, initialX, initialY;
-        let xOffset = window.innerWidth - 150;
-        let yOffset = window.innerHeight - 150;
-
-        character.style.left = xOffset + 'px';
-        character.style.top = yOffset + 'px';
-
-        function showMessage(message) {
-            speechBubble.textContent = message;
-            const charRect = character.getBoundingClientRect();
-            speechBubble.style.left = charRect.left + 'px';
-            speechBubble.style.top = (charRect.top - 80) + 'px';
-            speechBubble.classList.add('show');
-            character.classList.add('talking');
-            
-            setTimeout(() => {
-                speechBubble.classList.remove('show');
-                character.classList.remove('talking');
-            }, 3000);
-        }
-
-        character.addEventListener('click', () => {
-            showMessage(messages[messageIndex]);
-            messageIndex = (messageIndex + 1) % messages.length;
-        });
-
-        // Auto message on load
-        setTimeout(() => {
-            showMessage(messages[0]);
-        }, 1000);
-
-        // Random messages
-        setInterval(() => {
-            if (!speechBubble.classList.contains('show')) {
-                messageIndex = Math.floor(Math.random() * messages.length);
-                showMessage(messages[messageIndex]);
-            }
-        }, 15000);
-
-        // Dragging functionality
-        character.addEventListener('mousedown', dragStart);
-        character.addEventListener('touchstart', dragStart);
-
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('touchmove', drag);
-
-        document.addEventListener('mouseup', dragEnd);
-        document.addEventListener('touchend', dragEnd);
-
-        function dragStart(e) {
-            if (e.type === 'touchstart') {
-                initialX = e.touches[0].clientX - xOffset;
-                initialY = e.touches[0].clientY - yOffset;
-            } else {
-                initialX = e.clientX - xOffset;
-                initialY = e.clientY - yOffset;
-            }
-
-            if (e.target === character) {
-                isDragging = true;
-            }
-        }
-
-        function drag(e) {
-            if (isDragging) {
-                e.preventDefault();
-                
-                if (e.type === 'touchmove') {
-                    currentX = e.touches[0].clientX - initialX;
-                    currentY = e.touches[0].clientY - initialY;
-                } else {
-                    currentX = e.clientX - initialX;
-                    currentY = e.clientY - initialY;
-                }
-
-                xOffset = currentX;
-                yOffset = currentY;
-
-                setTranslate(currentX, currentY, character);
-            }
-        }
-
-        function dragEnd() {
-            initialX = currentX;
-            initialY = currentY;
-            isDragging = false;
-        }
-
-        function setTranslate(xPos, yPos, el) {
-            el.style.left = xPos + 'px';
-            el.style.top = yPos + 'px';
-        }
-
-        // Move character around sections randomly
-        function moveCharacter() {
-            if (!isDragging) {
-                const sections = ['hero', 'about', 'skills', 'projects', 'contact'];
-                const randomSection = sections[Math.floor(Math.random() * sections.length)];
-                const section = document.getElementById(randomSection);
-                const rect = section.getBoundingClientRect();
-                
-                xOffset = Math.random() * (window.innerWidth - 150);
-                yOffset = rect.top + window.scrollY + Math.random() * (rect.height - 150);
-                
-                character.style.transition = 'all 2s ease';
-                character.style.left = xOffset + 'px';
-                character.style.top = yOffset + 'px';
-                
-                setTimeout(() => {
-                    character.style.transition = 'all 0.3s ease';
-                }, 2000);
-            }
-        }
-
-        setInterval(moveCharacter, 20000);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
