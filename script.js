@@ -1,3 +1,28 @@
+// Typewriter Effect
+document.addEventListener('DOMContentLoaded', function() {
+    const heroTitle = document.querySelector('.hero-title');
+    const text = "Kamila Jusino Meléndez.";
+    
+    if (heroTitle) {
+        heroTitle.textContent = ""; // Clear existing text
+        
+        // Wait for the fadeInUp animation to complete (0.8s duration + 0.2s delay = 1s total)
+        setTimeout(() => {
+            let i = 0;
+            
+            function type() {
+                if (i < text.length) {
+                    heroTitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, 100);
+                }
+            }
+            
+            type();
+        }, 1000); // Wait 1000ms for animation to finish
+    }
+});
+
 // Ambient Background Particles
 function createParticles() {
     const bg = document.querySelector('.ambient-bg');
@@ -54,5 +79,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-
