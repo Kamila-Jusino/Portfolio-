@@ -57,6 +57,24 @@ window.addEventListener('resize', () => {
     resizeTimeout = setTimeout(createParticles, 250);
 });
 
+// Project Card Click Handler
+document.addEventListener('DOMContentLoaded', () => {
+    const projectCards = document.querySelectorAll('.project-card[data-github]');
+    projectCards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+            const githubUrl = card.getAttribute('data-github');
+            window.open(githubUrl, '_blank');
+        });
+        card.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const githubUrl = card.getAttribute('data-github');
+                window.open(githubUrl, '_blank');
+            }
+        });
+    });
+});
+
 // Contact Form Handler
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
