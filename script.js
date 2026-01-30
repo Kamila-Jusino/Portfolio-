@@ -21,6 +21,37 @@ document.addEventListener('DOMContentLoaded', function() {
             type();
         }, 1000); // Wait 1000ms for animation to finish
     }
+
+    // Project Card Click Handler
+    const projectCards = document.querySelectorAll('.project-card[data-github]');
+    projectCards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+            const githubUrl = card.getAttribute('data-github');
+            window.open(githubUrl, '_blank');
+        });
+    });
+
+    // Contact Form Handler
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Create mailto link
+            const subject = encodeURIComponent(`Contact from ${name}`);
+            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+            window.location.href = `mailto:kamila.jusino@gmail.com?subject=${subject}&body=${body}`;
+            
+            // Reset form
+            contactForm.reset();
+        });
+    }
 });
 
 // Ambient Background Particles
@@ -55,27 +86,4 @@ let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(createParticles, 250);
-});
-
-// Contact Form Handler
-document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contactForm');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
-            // Create mailto link
-            const subject = encodeURIComponent(`Contact from ${name}`);
-            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-            window.location.href = `mailto:kamila.jusino@gmail.com?subject=${subject}&body=${body}`;
-            
-            // Reset form
-            contactForm.reset();
-        });
-    }
 });
