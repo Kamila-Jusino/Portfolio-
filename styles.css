@@ -157,6 +157,11 @@ section {
     z-index: 1;
 }
 
+#contact {
+    min-height: auto;
+    padding: 4rem 2rem 10rem 2rem;
+}
+
 /* Ensure all text is visible */
 section * {
     opacity: 1 !important;
@@ -373,6 +378,25 @@ h2.section-title {
     line-height: 1.8;
 }
 
+.linkedin-highlight {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+    position: relative;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.2);
+    }
+}
+
 .contact-form {
     max-width: 600px;
     margin-bottom: 3rem;
@@ -529,16 +553,23 @@ footer {
     padding: 1.5rem;
     border-radius: 12px;
     margin-bottom: 1.5rem;
-    border-left: 4px solid var(--primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s;
+}
+
+.timeline-item:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
 }
 
 .timeline-item h3 {
     color: var(--primary);
     margin-bottom: 0.5rem;
+    font-size: 1.5rem;
 }
 
 .timeline-item .date {
-    color: var(--accent);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     margin-bottom: 1rem;
 }
